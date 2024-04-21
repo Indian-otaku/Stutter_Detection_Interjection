@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
 import torch
@@ -9,6 +10,18 @@ from utils.get_data import get_batched_data
 from utils.get_model import get_pretrained_model
 
 app = FastAPI()
+
+origins = ["*"]
+methods = ["*"]
+headers = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=methods,
+    allow_headers=headers,
+)
 
 accepted_file_types = [
     "audio/wav",
